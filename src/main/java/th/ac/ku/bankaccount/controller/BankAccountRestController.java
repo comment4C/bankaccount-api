@@ -47,6 +47,26 @@ public class BankAccountRestController {
         return record;
     }
 
+    @PutMapping("/{id}/deposit")
+    public BankAccount deposit(@PathVariable int id,
+                               @RequestParam double deposit,
+                               @RequestBody BankAccount bankAccount) {
+        BankAccount record = repository.findById(id).get();
+        record.setBalance(bankAccount.getBalance() + deposit);
+        repository.save(record);
+        return record;
+    }
+
+    @PutMapping("/{id}/withdraw")
+    public BankAccount withdraw(@PathVariable int id,
+                               @RequestParam double withdraw,
+                               @RequestBody BankAccount bankAccount) {
+        BankAccount record = repository.findById(id).get();
+        record.setBalance(bankAccount.getBalance() - withdraw);
+        repository.save(record);
+        return record;
+    }
+
     @DeleteMapping("/{id}")
     public BankAccount delete(@PathVariable int id) {
         BankAccount record = repository.findById(id).get();
